@@ -16,7 +16,6 @@ public final class AnalyticsConfig {
     AnalyticsConfig(Analytics plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
-
     }
 
     public DataStorage initializeDataStorage() {
