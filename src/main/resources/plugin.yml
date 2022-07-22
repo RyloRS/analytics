@@ -1,0 +1,9 @@
+name: Analytics
+version: '${project.version}'
+main: com.gmail.nihilist.analytics.Analytics
+author: RyloRS
+commands:
+  analytics:
+    description: Base plugin command.
+    permission: analytics.use
+    usage: /analytics <hostname>

@@ -1,0 +1,4 @@
+# Analytics Config
+
+storage:
+  type: H2
