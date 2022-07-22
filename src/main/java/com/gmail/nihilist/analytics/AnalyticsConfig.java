@@ -13,9 +13,14 @@ public final class AnalyticsConfig {
     private final Analytics plugin;
     private final ConfigurationSection config;
 
+    private final String commandOutputMessage;
+
     AnalyticsConfig(Analytics plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
+
+        ConfigurationSection messages = config.getConfigurationSection("messages");
+        this.commandOutputMessage = messages.getString("command-output");
     }
 
     public DataStorage initializeDataStorage() {
@@ -36,5 +41,9 @@ public final class AnalyticsConfig {
         }
 
         return null;
+    }
+
+    public String commandOutputMessage() {
+        return this.commandOutputMessage;
     }
 }

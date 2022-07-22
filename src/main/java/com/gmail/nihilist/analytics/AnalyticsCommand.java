@@ -10,9 +10,8 @@ import org.bukkit.command.CommandSender;
 
 import java.util.concurrent.CompletableFuture;
 
-import static java.lang.String.format;
-
 public final class AnalyticsCommand implements CommandExecutor {
+    private final AnalyticsConfig config;
     private final DataStorage storage;
 
     private static final String PERMISSION = "analytics.use";
@@ -20,6 +19,7 @@ public final class AnalyticsCommand implements CommandExecutor {
     private static final String CMD_OUTPUT_MSG = "Stats for %s\nUnique: %s\nTotal: %s";
 
     public AnalyticsCommand(Analytics plugin) {
+        this.config = plugin.config();
         this.storage = plugin.storage();
     }
 
@@ -35,8 +35,13 @@ public final class AnalyticsCommand implements CommandExecutor {
             CompletableFuture<JoinRecord> future;
             future = CompletableFuture.supplyAsync(() -> storage.getRecord(hostname), AsyncHelper.executor());
 
-            // TODO: configurable message
-            future.thenAccept((record) -> sender.sendMessage(format(CMD_OUTPUT_MSG, hostname, record.uniqueJoins(), record.totalJoins())));
+            future.thenAccept((record) -> {
+              String message = config.commandOutputMessage();
+              message = message.replace("%hostname", hostname)
+                      .replace("%unique", String.valueOf(record.uniqueJoins()))
+                      .replace("%total", String.valueOf(record.totalJoins()));
+              sender.sendMessage(message);
+            });
         }
         return true;
     }

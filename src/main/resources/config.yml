@@ -1,4 +1,8 @@
 # Analytics Config
 
+messages:
+  # Placeholders: %unique%, %total%, %hostname%, \n for newline
+  command-output: "Stats for %hostname\nUnique: %unique\nTotal: %total"
+
 storage:
   type: H2
